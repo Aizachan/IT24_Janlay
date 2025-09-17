@@ -8,14 +8,16 @@
         .done{
             text-decoration: line-through;
             color: gray;
+            opacity: 0.6;
+            cursor: not-allowed;
         }
         </style>
 </head>
 <body>
     <h1>To-Do List</h1>
     <input type="text" id="taskInput" placeholder="Add a new task...">/>
-    <button onclick="addTask()">Add Task</button>
-    <ul id="taskList"> Task goes here</ul>ul>
+    <button onclick="addTask()">Add</button>
+    <ul id="taskList"> Task goes here</ul>
     
     <script>
         function addTask(){
@@ -81,7 +83,7 @@
             return deleteBtn;
         }
         function handleDeleteButtonClick(li){
-            console.log("handleDeleteButtonClick() ->", li.textContent.replace("Delete","").trim(), Date());
+            console.log("handleDeleteButtonClick() ->", li.textContent.replace("X","").trim(), Date());
             li.remove();
         }
         function createEditButton(li, taskSpan){
@@ -101,7 +103,7 @@
             const newText = prompt("Edit task:", currentText);
             if (newText !== null && newText.trim() !== "") {
                 li.firstChild.textContent = newText.trim();
-                console.log("handleEditClick() ->", newText.trim(), Date());
+                console.log("handleEditClick() -> updated to:", newText.trim(), Date());
             } else {
                 console.log("handelEditClick -> no change made");
             }
@@ -112,7 +114,7 @@
             doneBtn.className = 'done-btn';
             doneBtn.style.marginLeft = '8px';
             doneBtn.onclick = () => {
-                const li = taskSpan.parentElement;
+                handleDoneButtonClick(li);
                 console.log(li);
 
                 li.classList.add("done");
