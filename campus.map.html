@@ -33,11 +33,26 @@
     <script>
         function initMap(mapDataUrl){
             const map = L.map('map').setView([8.360302114528377, 124.8684101925283], 17);
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+
+            //openStreetMap
+            const openStreetMap = tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
-                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            }).addTo(map);
-            console.log("Map loaded" + Date());
+
+                attribution: '&copy; OpenStreetMap contributors'
+
+            })
+            //Satellite
+            const satellite = L.tileLayer{
+                'https://server.arcgrisonline.com/ArcGIS/rest/services/World_Imagerary/MapServer/tile/{z}/{y}/{x}',
+                {attribution:'Tiles (c) Esri - Source, Maxar, Earthstar Geographics, and GIS User Community'}
+            }
+            // .addTo(map);
+            // console.log("Map loaded" + Date());
+            openStreetMap.addTo(Map);
+            console.log("Base map tile layer loaded" + Date ());
+
+            const markerGroups = {};
+
             
             fetch(mapDataUrl)
             .then(response => response.json())
@@ -61,8 +76,15 @@
         document.addEventListener('DOMContentLoaded',()=>{ 
             initMap('maps.json');
         });
+
+        /*add marker group into the map according to marker filter 
+        object.values (markerGroups).forEach(group =>group.addTo(map));
+        // map layer control 
+        // const baseMaps = {
+        "OpenStreetMap"; openStreetMap,
+        "Satellite": satellite*/
+        
    </script>
 </html>
     
-      
-
+     
